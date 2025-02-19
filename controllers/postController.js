@@ -27,7 +27,7 @@ exports.createPost = async (req, res) => {
     const newPost = new Post({
       title,
       content,
-      author: req.user.userId  // userId set in auth middleware
+      author: req.user.userId  
     });
     await newPost.save();
     res.status(201).json(newPost);
@@ -43,7 +43,7 @@ exports.updatePost = async (req, res) => {
     if (!post) {
       return res.status(404).json({ message: 'Post not found' });
     }
-    // Ensure only the author can update the post
+    
     if (post.author.toString() !== req.user.userId) {
       return res.status(401).json({ message: 'Unauthorized' });
     }
@@ -63,7 +63,7 @@ exports.deletePost = async (req, res) => {
     if (!post) {
       return res.status(404).json({ message: 'Post not found' });
     }
-    // Ensure only the author can delete the post
+    
     if (post.author.toString() !== req.user.userId) {
       return res.status(401).json({ message: 'Unauthorized' });
     }
